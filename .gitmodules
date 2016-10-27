@@ -7,3 +7,6 @@
 [submodule "provisioning"]
 	path = provisioning
 	url = git@bitbucket.org:zoadilack/tavro-provisioning
+[submodule "app"]
+	path = app
+	url = git@bitbucket.org:zoadilack/tavro-app
