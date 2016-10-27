@@ -1,0 +1,9 @@
+[submodule "admin"]
+	path = admin
+	url = git@bitbucket.org:zoadilack/tavro-admin
+[submodule "api"]
+	path = api
+	url = git@bitbucket.org:zoadilack/tavro-api
+[submodule "provisioning"]
+	path = provisioning
+	url = git@bitbucket.org:zoadilack/tavro-provisioning
