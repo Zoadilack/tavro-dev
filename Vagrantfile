@@ -21,6 +21,10 @@ Vagrant.configure(2) do |config|
   config.landrush.enabled = true
   config.landrush.tld = 'dev'
   config.landrush.host hostname, ip_address
+  config.landrush.host "api." + hostname, ip_address
+  config.landrush.host "admin." + hostname, ip_address
+  config.landrush.host "phpunit." + hostname, ip_address
+  config.landrush.host "docs." + hostname, ip_address
 
   # from VVV
   # SSH Agent Forwarding
