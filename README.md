@@ -4,6 +4,12 @@ This environment pulls in the `admin`, `app`, and `api` repositories to build a 
 
 The structure is setup such that you can run them in isolation instead of desired, but this is setup for brevity and simplicity for less powerful workstations.
 
+## Getting Started
+
+Clone this repository and the submodules with the following command:
+
+    $ git clone git@bitbucket.org:zoadilack/tavro-dev-env.git --recursive
+
 ## Documentation
 
 Full documentation here: [https://sites.google.com/a/zoadilack.com/tavro/](https://sites.google.com/a/zoadilack.com/tavro/)
