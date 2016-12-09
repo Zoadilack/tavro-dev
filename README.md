@@ -9,6 +9,7 @@ The structure is setup such that you can run them in isolation instead of desire
 Clone this repository and the submodules with the following command:
 
     $ git clone git@bitbucket.org:zoadilack/tavro-dev-env.git --recursive
+    $ cd tavro-dev-env && vagrant up
 
 ## Documentation
 
