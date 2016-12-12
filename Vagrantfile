@@ -64,5 +64,11 @@ Vagrant.configure(2) do |config|
       }
   end
 
+  config.vm.post_up_message = "TAVRO DEV ENVIRONMENT COMPLETE!"
+  config.vm.post_up_message = ""
+  config.vm.post_up_message = "Visit the official docs for setting up authentication keys: https://sites.google.com/a/zoadilack.com/tavro/"
+  config.vm.post_up_message = ""
+
+
 end
 
