@@ -13,6 +13,18 @@ Vagrant.configure(2) do |config|
 
   Vagrant.require_version ">= 1.8.0"
 
+  required_plugins = %w(landrush vagrant-vbguest vagrant-aws)
+
+    plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+    if not plugins_to_install.empty?
+      puts "Installing plugins: #{plugins_to_install.join(' ')}"
+      if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+        exec "vagrant #{ARGV.join(' ')}"
+      else
+        abort "Installation of one or more plugins has failed. Aborting."
+      end
+    end
+
   config.vm.box = "geerlingguy/ubuntu1604"
   config.vm.network "private_network", ip: ip_address
   config.vm.hostname = hostname
