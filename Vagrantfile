@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
 
   Vagrant.require_version ">= 1.8.0"
 
-  required_plugins = %w(landrush vagrant-vbguest vagrant-aws)
+  required_plugins = %w(landrush vagrant-vbguest)
 
     plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
     if not plugins_to_install.empty?
