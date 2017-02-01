@@ -2,6 +2,3 @@
 .idea
 .DS_Store
 .vagrant
-config/env.yml
-config/parameters.yml
-config/mysql.yml
