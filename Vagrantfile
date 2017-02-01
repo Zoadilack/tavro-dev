@@ -69,11 +69,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/vagrant.yml"
-      ansible.extra_vars = {
-          hostname: hostname,
-          appname: appname,
-          mysql_root_password: appname
-      }
+      ansible.skip_tags = "staging, production"
   end
 
   config.vm.post_up_message = "TAVRO DEV ENVIRONMENT COMPLETE!"

@@ -1,16 +1,8 @@
-# Tavro Development Environment
+# Tavro Local Development
 
-This environment pulls in the `admin`, `app`, and `api` repositories to build a unified environment where all three are shared on the same physical VM.
-
-The structure is setup such that you can run them in isolation instead of desired, but this is setup for brevity and simplicity for less powerful workstations.
+This aggregate repository builds a local virtual machine using Virtualbox, Vagrant and Ansible to provision a comprehensive environment with `admin`, `api`, `phpunit`, `docs` and `app` hosts.
 
 ## Getting Started
 
-Clone this repository and the submodules with the following command:
+[Read the documentation in Confluence](https://zoadilack.atlassian.net/wiki/pages/viewpage.action?pageId=1966120#Provisioning&DevOps-tavro-dev-env)
 
-    $ git clone git@bitbucket.org:zoadilack/tavro-dev-env.git --recursive
-    $ cd tavro-dev-env && vagrant up
-
-## Documentation
-
-Full documentation here: [https://sites.google.com/a/zoadilack.com/tavro/](https://sites.google.com/a/zoadilack.com/tavro/)
