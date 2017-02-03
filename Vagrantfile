@@ -74,8 +74,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.post_up_message = "TAVRO DEV ENVIRONMENT COMPLETE!"
   config.vm.post_up_message = ""
-  config.vm.post_up_message = "Visit the official docs for setting up authentication keys: https://sites.google.com/a/zoadilack.com/tavro/"
-  config.vm.post_up_message = "Be sure to verify your `parameters.yml` files for both ADMIN and API."
+  config.vm.post_up_message = "Visit the official docs for setting up authentication keys: https://zoadilack.atlassian.net/wiki/pages/viewpage.action?pageId=1966120#Provisioning&DevOps-tavro-dev-env"
 
 
 end
