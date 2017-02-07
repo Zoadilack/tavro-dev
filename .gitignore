@@ -2,3 +2,4 @@
 .idea
 .DS_Store
 .vagrant
+docs/api-blueprint.html

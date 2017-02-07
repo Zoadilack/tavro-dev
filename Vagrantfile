@@ -57,7 +57,9 @@ Vagrant.configure(2) do |config|
   # NFS is waaaaay faster than the standard rsync, and this way we determine the
   # root directory structure to replicate production as well.
   config.vm.synced_folder 'api/api', "/var/www/tavro/api", :nfs => true
+  config.vm.synced_folder 'api/docs', "/var/www/tavro/api-docs", :nfs => true
   config.vm.synced_folder 'admin/admin', "/var/www/tavro/admin", :nfs => true
+  config.vm.synced_folder 'admin/docs', "/var/www/tavro/admin-docs", :nfs => true
   config.vm.synced_folder 'provisioning', "/var/www/tavro/provisioning", :nfs => true
   config.vm.synced_folder 'app', "/var/www/tavro/app", :nfs => true
 
@@ -72,10 +74,9 @@ Vagrant.configure(2) do |config|
       ansible.skip_tags = "staging, production"
   end
 
-  config.vm.post_up_message = "TAVRO DEV ENVIRONMENT COMPLETE!"
-  config.vm.post_up_message = ""
+  config.vm.post_up_message = "aglio -i api/blueprint.apib -o api/docs/apib.html"
   config.vm.post_up_message = "Visit the official docs for setting up authentication keys: https://zoadilack.atlassian.net/wiki/pages/viewpage.action?pageId=1966120#Provisioning&DevOps-tavro-dev-env"
-
+  config.vm.post_up_message = "TAVRO DEV ENVIRONMENT COMPLETE!"
 
 end
 
