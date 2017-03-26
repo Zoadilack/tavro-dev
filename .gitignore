@@ -4,3 +4,5 @@
 .vagrant
 docs/api-blueprint.html
 .vscode
+cache/
+logs/
