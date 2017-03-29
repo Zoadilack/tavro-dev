@@ -4,4 +4,12 @@ This aggregate repository builds a local virtual machine using Virtualbox, Vagra
 
 ## Getting Started
 
-Everything you need to get started is in Confluence: [Read the documentation in Confluence](https://zoadilack.atlassian.net/wiki/pages/viewpage.action?pageId=1966120#Provisioning&DevOps-tavro-dev-env).
+    git clone git@github.com:zoadilack/tavro-dev.git && cd tavro-dev && bash setup.sh
+    
+## Wiki
+
+* [API (tavro-api)](https://github.com/Zoadilack/tavro-api/wiki)
+* [CORE (tavro-core)](https://github.com/Zoadilack/tavro-core/wiki)
+* [ADMIN (tavro-admin)](https://github.com/Zoadilack/tavro-admin/wiki)
+* [APP (tavro-app)](https://github.com/Zoadilack/tavro-app/wiki)
+* [DevOps (tavro-provisioning)](https://github.com/Zoadilack/tavro-provisioning/wiki)
