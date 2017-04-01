@@ -28,13 +28,13 @@ This file contains the essential parameters for the API, so these need to be act
 
 These can mostly be unchanged, but if you want to you can for specific purposes:
 
-### Build your local development environment
+## Build your local development environment
 
 This will build your virtual environment within Vagrant/Virtualbox to build Tavro after it first provisions your local machine with some essential tools and software. 
 
      $ cd tavro-dev && bash setup.sh
     
-## Wiki
+# Wiki & Docs
 
 * [API (tavro-api)](https://github.com/Zoadilack/tavro-api/wiki)
 * [CORE (tavro-core)](https://github.com/Zoadilack/tavro-core/wiki)
