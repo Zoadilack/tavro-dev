@@ -15,8 +15,8 @@ Three simple steps to get up and running!
 
 First, make sure you copy the default `parameters.yml.dist` and `env.yml.dist` files to `parameters.yml` and `{env}.yml` (in this case, you'll want to use `vagrant.yml`).
 
-    cp provisioning/config/env.yml.dist provisioning/config/vagrant.yml
-    cp provisioning/config/parameters.yml.dist provisioning/config/parameters.yml
+    cp /path/to/tavro-dev/provisioning/config/env.yml.dist provisioning/config/vagrant.yml
+    cp /path/to/tavro-dev/provisioning/config/parameters.yml.dist provisioning/config/parameters.yml
     
 Now that these new files are created, you'll need to populate them with values to be used in ***your*** build.
 
@@ -32,7 +32,7 @@ These can mostly be unchanged, but if you want to you can for specific purposes:
 
 This will build your virtual environment within Vagrant/Virtualbox to build Tavro after it first provisions your local machine with some essential tools and software. 
 
-     $ cd tavro-dev && bash setup.sh
+     $ cd /path/to/tavro-dev && bash setup.sh
     
 # Wiki & Docs
 
