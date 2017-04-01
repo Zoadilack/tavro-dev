@@ -28,7 +28,7 @@ This file contains the essential parameters for the API, so these need to be act
 
 These can mostly be unchanged, but if you want to you can for specific purposes:
 
-## Build your local development environment
+## Last but not least!
 
 This will build your virtual environment within Vagrant/Virtualbox to build Tavro after it first provisions your local machine with some essential tools and software. 
 
