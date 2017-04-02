@@ -11,10 +11,6 @@ git clone git@github.com:zoadilack/scripts.git zoadilack-scripts && bash zoadila
 # Update all the latest submodules
 git pull && git submodule init && git submodule update && git submodule status
 
-# Copy the tavro provision config variables
-cp provisioning/config/env.yml.dist provisioning/config/vagrant.yml
-cp provisioning/config/parameters.yml.dist provisioning/config/parameters.yml
-
 # Install all the dependencies for the app
 app/yarn install
 
