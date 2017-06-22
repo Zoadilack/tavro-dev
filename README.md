@@ -9,12 +9,7 @@ Three simple steps to get up and running!
 
 ### Clone `tavro-dev`
 
-    $ git clone git@github.com:zoadilack/tavro-dev.git
-    $ git submodule update --init --recursive
-    
-And for future updates..
-
-    $ git submodule update --recursive
+    $ git clone --recursive git@github.com:zoadilack/tavro-dev.git
     
 ### Copy `paramters` and `env` variables for your environment build.
 
