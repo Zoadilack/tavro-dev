@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  Vagrant.require_version ">= 1.8.0"
+  Vagrant.require_version ">= 1.9.0"
 
   required_plugins = %w(landrush vagrant-vbguest)
 
