@@ -25,7 +25,7 @@ Vagrant.configure(2) do |config|
       end
     end
 
-  config.vm.box = "geerlingguy/ubuntu1604"
+  config.vm.box = "ubuntu/xenial64"
   config.vm.network "private_network", ip: ip_address
   config.vm.hostname = hostname
 
