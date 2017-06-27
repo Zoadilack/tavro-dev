@@ -11,8 +11,8 @@ git clone git@github.com:zoadilack/scripts.git zoadilack-scripts && bash zoadila
 # Update all the latest submodules
 git pull && git submodule init && git submodule update && git submodule status
 
-cd api/api && composer install
-cd admin/admin && composer install --prefer-dist
+cd api/api && composer --prefer-dist install && cd ../../
+cd admin/admin && composer install --prefer-dist && cd ../../
 
 curl -O http://get.sensiolabs.org/sami.phar bin/sami
 chmod a+x bin/sami
