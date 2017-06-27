@@ -11,5 +11,13 @@ git clone git@github.com:zoadilack/scripts.git zoadilack-scripts && bash zoadila
 # Update all the latest submodules
 git pull && git submodule init && git submodule update && git submodule status
 
+cd api/api && composer install
+cd admin/admin && composer install --prefer-dist
+
+curl -O http://get.sensiolabs.org/sami.phar bin/sami
+chmod a+x bin/sami
+
+php bin/sami update api/docs/config.php -v
+
 # Run vagrant
 vagrant up

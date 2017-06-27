@@ -7,3 +7,4 @@ docs/api-blueprint.html
 cache/
 logs/
 zoadilack-scripts
+bin/*
