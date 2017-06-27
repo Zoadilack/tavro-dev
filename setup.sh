@@ -11,8 +11,5 @@ git clone git@github.com:zoadilack/scripts.git zoadilack-scripts && bash zoadila
 # Update all the latest submodules
 git pull && git submodule init && git submodule update && git submodule status
 
-# Install all the dependencies for the app
-app/yarn install
-
 # Run vagrant
 vagrant up
