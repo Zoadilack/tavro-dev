@@ -6,24 +6,36 @@
 #
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="/usr/local/zoadilack-scripts"
 
-# Setup your workstation
-#git clone git@github.com:zoadilack/scripts.git zoadilack-scripts && bash zoadilack-scripts/osx-dev.sh
+if [ ! -d "$SCRIPT_DIR" ]; then
+  git clone git@github.com:zoadilack/scripts.git /usr/local/zoadilack-scripts
+  # Setup your local workstation
+  bash /usr/local/zoadilack-scripts/osx-dev.sh
+fi
 
 # Update all the latest submodules
-#git pull && git submodule init && git submodule update && git submodule status
+git pull && git pull --recurse-submodules
+git submodule foreach git pull origin master
+git submodule foreach git checkout master
 
-print "Installing API"
-cd api/api && composer install && cd $DIR
+API_VENDOR_DIR="$DIR/api/api/vendor"
+if [ ! -d "$API_VENDOR_DIR" ]; then
+  echo "Installing API"
+  cd api/api && composer install && cd $DIR
+fi
 
-#print "Installing ADMIN"
-#cd admin/admin && composer install --prefer-dist && cd $DIR
+echo "Installing tavro-app"
+cd app && yarn install && cd $DIR
 
-wget -O http://get.sensiolabs.org/sami.phar
+echo "Installing SAMI"
+wget http://get.sensiolabs.org/sami.phar
 mv sami.phar bin/sami
 chmod a+x bin/sami
 
+echo "Building API Docs"
 php bin/sami update api/docs/config.php -v
 
 # Run vagrant
+echo "Building Local virtual machine"
 vagrant up

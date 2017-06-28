@@ -11,3 +11,4 @@ sudo rm -rf api/api/vendor
 sudo rm -rf admin/admin/vendor
 sudo rm -rf api/docs/cache/*
 sudo rm -rf api/docs/build/*
+sudo rm -rf app/node_modules
