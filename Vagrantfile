@@ -35,8 +35,6 @@ Vagrant.configure(2) do |config|
   config.landrush.host hostname, ip_address
   config.landrush.host "api." + hostname, ip_address
   config.landrush.host "admin." + hostname, ip_address
-  config.landrush.host "phpunit." + hostname, ip_address
-  config.landrush.host "docs." + hostname, ip_address
 
   # from VVV
   # SSH Agent Forwarding
@@ -57,10 +55,7 @@ Vagrant.configure(2) do |config|
   # NFS is waaaaay faster than the standard rsync, and this way we determine the
   # root directory structure to replicate production as well.
   config.vm.synced_folder 'api/api', "/var/www/tavro/api", :nfs => true
-  config.vm.synced_folder 'api/docs', "/var/www/tavro/api-docs", :nfs => true
   config.vm.synced_folder 'admin/admin', "/var/www/tavro/admin", :nfs => true
-  config.vm.synced_folder 'admin/docs', "/var/www/tavro/admin-docs", :nfs => true
-  config.vm.synced_folder 'provisioning', "/var/www/tavro/provisioning", :nfs => true
   config.vm.synced_folder 'app', "/var/www/tavro/app", :nfs => true
 
   # from VVV

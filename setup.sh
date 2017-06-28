@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Setup your workstation for Tavro and provision a standalone dev environment.
 #
@@ -26,7 +26,11 @@ if [ ! -d "$API_VENDOR_DIR" ]; then
 fi
 
 echo "Installing tavro-app"
-cd app && yarn install && cd $DIR
+if [ ! -d "app/node_modules" ]; then
+    cd app && yarn install && cd $DIR
+else
+    cd app && yarn upgrade && cd $DIR
+fi
 
 echo "Installing SAMI"
 wget http://get.sensiolabs.org/sami.phar
@@ -38,4 +42,8 @@ php bin/sami update api/docs/config.php -v
 
 # Run vagrant
 echo "Building Local virtual machine"
-vagrant up
+if [ ! -d ".vagrant" ]; then
+    vagrant up
+else
+    vagrant reload
+fi
