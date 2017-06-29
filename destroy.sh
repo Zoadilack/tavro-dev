@@ -12,3 +12,4 @@ sudo rm -rf admin/admin/vendor
 sudo rm -rf api/docs/cache/*
 sudo rm -rf api/docs/build/*
 sudo rm -rf app/node_modules
+sudo rm -rf ubuntu-xenial-16.04-cloudimg-console.log
