@@ -22,10 +22,10 @@ git submodule foreach git checkout master
 API_VENDOR_DIR="$DIR/api/api/vendor"
 if [ ! -d "$API_VENDOR_DIR" ]; then
   echo "Installing API"
-  cd api/api && composer install --prefer-dist --no-plugins && cd $DIR
+  cd api/api && composer install -v --prefer-dist --no-plugins && cd $DIR
 else
   echo "Updating API"
-  cd api/api && composer update --prefer-dist && cd $DIR
+  cd api/api && composer update -v --prefer-dist && cd $DIR
 fi
 
 echo "Installing tavro-app"
@@ -46,8 +46,9 @@ php bin/sami update api/docs/config.php -v
 # Run vagrant
 echo "Building Local virtual machine"
 vagrant box update
-if [ ! -d ".vagrant" ]; then
+if [ ! -d ".vagrant/machines/default/virtualbox/id" ]; then
     vagrant up
 else
     vagrant reload
+    vagrant provision
 fi
