@@ -43,7 +43,7 @@ services:
       volumes:
           - ./db:/var/lib/mysql
       environment:
-          - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       healthcheck:
          test: 'echo "SELECT 1" |mysql -u${MYSQL_USERNAME} -h127.0.0.1'
          interval: 1s
