@@ -4,25 +4,29 @@ version: '2.1'
 
 services:
 
-  api:
-    image: "tavro/api"
-    container_name: "tavro_api"
-    restart: always
+  php7:
+    image: php:7-fpm
+    container_name: "php7"
     volumes:
-      - ./api/api:/var/www/html
+      - ./api/api:/var/www/tavro/api
+      - ./admin/admin:/var/www/tavro/admin
+      - ./app:/var/www/tavro/app
+
+  api:
+    image: nginx:latest
+    container_name: "tavro_api"
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      - NGINX_HOST=${API_HOSTNAME}
-      - NGINX_PORT=${API_PORT}
+    volumes:
+      - ./api/api:/var/www/tavro/api
+      - ./provisioning/docker/tavro-api/conf/nginx.conf:/etc/nginx/conf.d/site.conf
     depends_on:
-      - db
-    links:
-      - db
+      - mysql
+      - php7
 
-  db:
-    image: mysql
+  mysql:
+    image: mysql:5.6
     container_name: "tavro_db"
     restart: always
     ports:
@@ -31,10 +35,11 @@ services:
        - ./db:/var/lib/mysql
     environment:
        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     healthcheck:
        test: 'echo "SELECT 1" |mysql -u${MYSQL_USERNAME} -h127.0.0.1'
        interval: 1s
-       retries: 120
+       retries: 10
 
   phpmyadmin:
     image: 'phpmyadmin/phpmyadmin'
@@ -42,10 +47,10 @@ services:
     restart: always
     ports:
        - '8080:80'
+    hostname: "phpmyadmin"
+    domainname: ${DOMAIN_NAME}
     depends_on:
-      - db
-    links:
-      - db
+      - mysql
     environment:
         MYSQL_USERNAME: ${MYSQL_USERNAME}
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
