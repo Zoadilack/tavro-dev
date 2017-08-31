@@ -7,6 +7,8 @@ services:
   php7:
     image: php:7-fpm
     container_name: "php7"
+    ports:
+      - "9000:9000"
     volumes:
       - ./api/api:/var/www/tavro/api
       - ./admin/admin:/var/www/tavro/admin
