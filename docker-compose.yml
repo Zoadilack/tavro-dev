@@ -27,14 +27,12 @@ services:
     restart: always
     ports:
        - '${MYSQL_PORT}:${MYSQL_PORT}'
-    volumes:
-       - ./db:/var/lib/mysql
     environment:
-       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    healthcheck:
-       test: 'echo "SELECT 1" |mysql -u${MYSQL_USERNAME} -h127.0.0.1'
-       interval: 1s
-       retries: 120
+       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+       MYSQL_DATABASE: ${MYSQL_DATABASE}
+       MYSQL_USERNAME: ${MYSQL_USERNAME}
+       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   phpmyadmin:
     image: 'phpmyadmin/phpmyadmin'
