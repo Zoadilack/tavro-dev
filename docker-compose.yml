@@ -30,7 +30,7 @@ services:
     environment:
         MYSQL_USERNAME: ${MYSQL_USERNAME}
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-        PMA_HOST: db
+        PMA_HOST: db #this needs to match the container_name of the db container
         UPLOAD_SIZE: ${UPLOAD_SIZE}
 
   api:
@@ -49,4 +49,4 @@ services:
       - db
     links:
       - db
-    command: ["sh", "/var/www/tavro/init-dev.sh"]
+    #command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
