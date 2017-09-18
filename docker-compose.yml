@@ -4,23 +4,6 @@ version: '2.1'
 
 services:
 
-  api:
-    image: "tavro/api"
-    container_name: "tavro_api"
-    restart: always
-    volumes:
-      - ./api/api:/var/www/html
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - NGINX_HOST=${API_HOSTNAME}
-      - NGINX_PORT=${API_PORT}
-    depends_on:
-      - db
-    links:
-      - db
-
   db:
     image: mysql
     container_name: "tavro_db"
@@ -48,4 +31,22 @@ services:
         MYSQL_USERNAME: ${MYSQL_USERNAME}
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
         PMA_HOST: db
-        UPLOAD_SIZE: 100M
+        UPLOAD_SIZE: ${UPLOAD_SIZE}
+
+  api:
+    image: "tavro/api"
+    container_name: "tavro_api"
+    restart: always
+    volumes:
+      - ./api:/var/www/tavro
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_HOST=${API_HOSTNAME}
+      - NGINX_PORT=${API_PORT}
+    depends_on:
+      - db
+    links:
+      - db
+    command: ["sh", "/var/www/tavro/init-dev.sh"]
