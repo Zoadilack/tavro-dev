@@ -4,35 +4,29 @@ version: '2.1'
 
 services:
 
-  php7:
-    image: php:7-fpm
-    container_name: "php7"
-    ports:
-      - "9000:9000"
-    volumes:
-      - ./api/api:/var/www/tavro/api
-      - ./admin/admin:/var/www/tavro/admin
-      - ./app:/var/www/tavro/app
-
   api:
-    image: nginx:latest
+    image: "tavro/api"
     container_name: "tavro_api"
+    restart: always
+    volumes:
+      - ./api/api:/var/www/html
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - ./api/api:/var/www/tavro/api
-      - ./provisioning/docker/tavro-api/conf/nginx.conf:/etc/nginx/conf.d/site.conf
+    environment:
+      - NGINX_HOST=${API_HOSTNAME}
+      - NGINX_PORT=${API_PORT}
     depends_on:
-      - mysql
-      - php7
+      - db
+    links:
+      - db
 
-  mysql:
-    image: mysql:5.6
+  db:
+    image: mysql
     container_name: "tavro_db"
     restart: always
     ports:
-       - '${MYSQL_PORT}:${MYSQL_PORT}'
+       - ${MYSQL_PORT}
     environment:
        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -46,11 +40,12 @@ services:
     restart: always
     ports:
        - '8080:80'
-    hostname: "phpmyadmin"
-    domainname: ${DOMAIN_NAME}
     depends_on:
-      - mysql
+      - db
+    links:
+      - db
     environment:
         MYSQL_USERNAME: ${MYSQL_USERNAME}
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-        PMA_HOST: ${PMA_HOST}
+        PMA_HOST: db
+        UPLOAD_SIZE: 100M
