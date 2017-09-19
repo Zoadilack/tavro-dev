@@ -49,4 +49,4 @@ services:
       - db
     links:
       - db
-    #command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
+    command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
