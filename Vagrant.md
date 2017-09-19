@@ -1,6 +1,4 @@
-# Tavro Local Development
-
-This aggregate repository builds a local virtual machine using Virtualbox, Vagrant and Ansible to provision a comprehensive environment with `admin`, `api`, `phpunit`, `docs` and `app` hosts.
+# Tavro (Vagrant)
 
 ## Getting Started
 Three simple steps to get up and running!
