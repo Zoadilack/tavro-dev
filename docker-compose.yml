@@ -50,3 +50,21 @@ services:
     links:
       - db
     command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
+
+  admin:
+    image: "tavro/admin"
+    container_name: "tavro_admin"
+    restart: always
+    volumes:
+      - ./api:/var/www/tavro
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_HOST=${API_HOSTNAME}
+      - NGINX_PORT=${API_PORT}
+    depends_on:
+      - db
+    links:
+      - db
+    command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]

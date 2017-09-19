@@ -11,7 +11,7 @@ Three simple steps to get up and running!
 
     $ git clone --recursive git@github.com:zoadilack/tavro-dev.git
     
-### Copy `paramters` and `env` variables for your environment build.
+### Copy `parameters` and `env` variables for your environment build.
 
 First, make sure you copy the default `parameters.yml.dist` and `env.yml.dist` files to `parameters.yml` and `{env}.yml` (in this case, you'll want to use `vagrant.yml`).
 
