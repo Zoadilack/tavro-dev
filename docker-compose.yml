@@ -43,28 +43,40 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - NGINX_HOST=${API_HOSTNAME}
-      - NGINX_PORT=${API_PORT}
+      VIRTUAL_HOST: ${API_HOSTNAME}
+      VIRTUAL_PORT: ${API_PORT}
     depends_on:
       - db
     links:
       - db
     command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
 
-  admin:
-    image: "tavro/admin"
-    container_name: "tavro_admin"
-    restart: always
-    volumes:
-      - ./api:/var/www/tavro
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - NGINX_HOST=${API_HOSTNAME}
-      - NGINX_PORT=${API_PORT}
-    depends_on:
-      - db
-    links:
-      - db
-    command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
+  # admin:
+  #   image: "tavro/admin"
+  #   container_name: "tavro_admin"
+  #   restart: always
+  #   volumes:
+  #     - ./admin:/var/www/tavro
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   environment:
+  #     VIRTUAL_HOST: ${ADMIN_HOSTNAME}
+  #     VIRTUAL_PORT: ${ADMIN_PORT}
+  #   depends_on:
+  #     - db
+  #   links:
+  #     - db
+  #   command: ["bash", "/var/www/tavro/init.sh", "--env", "${ADMIN_ENVIRONMENT}"]
+
+  # app:
+  #   image: "tavro/app"
+  #   container_name: "tavro_app"
+  #   restart: always
+  #   volumes:
+  #     - ./app:/var/www/tavro
+  #   ports:
+  #     - "4000:4000"
+  #   environment:
+  #     VIRTUAL_HOST: ${APP_HOSTNAME}
+  #     VIRTUAL_PORT: ${APP_PORT}
