@@ -13,27 +13,34 @@ This aggregate repository builds a local virtual machine using Virtualbox, Vagra
 
     $ git clone --recursive git@github.com:zoadilack/tavro-dev.git && cd tavro-dev && cp .env.dist .env
     
-### API Setup
+## Setup & Run
 
-Make sure for this step that you do not ignore the `parameters` configuration if you're missing a proper `api/api/app/config/parameters.yml` file
+First, we need to run composer *locally* for `api` and `admin`
 
-    cd api/api && composer install
-    
-### ADMIN Setup
+    composer install -d api/api
+    composer install -d admin/admin
 
-Make sure for this step that you do not ignore the `parameters` configuration if you're missing a proper `admin/admin/app/config/parameters.yml` file
+Now we need to build the docker environment.
 
-    cd admin/admin && composer install
-    
+    docker-compose up
+
+Now, with the environment, we need to initialize the application database.
+
+    docker exec -it tavro_api bash /var/www/tavro/init.sh --env=dev
+
 ## Useful Tools
 
 Install `docker-clean` to manage your containers during development.
 
     brew install docker-clean
     
-And then a simple "cleanup" command would be:
+Remove all containers and images:
 
     docker-clean -s -c -i -t
+
+Remove all networks, volumes, etc:
+
+    docker-clean
     
 # Wiki & Docs
 

@@ -16,6 +16,10 @@ services:
        MYSQL_DATABASE: ${MYSQL_DATABASE}
        MYSQL_USERNAME: ${MYSQL_USERNAME}
        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      tavro:
+        aliases:
+          - db.tavro.dev
 
   phpmyadmin:
     image: 'phpmyadmin/phpmyadmin'
@@ -32,6 +36,10 @@ services:
         MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
         PMA_HOST: db #this needs to match the container_name of the db container
         UPLOAD_SIZE: ${UPLOAD_SIZE}
+    networks:
+      tavro:
+        aliases:
+          - phpmyadmin.tavro.dev
 
   api:
     image: "tavro/api"
@@ -49,7 +57,10 @@ services:
       - db
     links:
       - db
-    command: ["bash", "/var/www/tavro/init.sh", "--env", "${API_ENVIRONMENT}"]
+    networks:
+      tavro:
+        aliases:
+          - api.tavro.dev
 
   # admin:
   #   image: "tavro/admin"
@@ -80,3 +91,7 @@ services:
   #   environment:
   #     VIRTUAL_HOST: ${APP_HOSTNAME}
   #     VIRTUAL_PORT: ${APP_PORT}
+
+networks:
+  tavro:
+    driver: bridge
