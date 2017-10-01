@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
 
   Vagrant.require_version ">= 1.9.0"
 
-  required_plugins = %w(landrush vagrant-vbguest)
+  required_plugins = %w(landrush vagrant-vbguest vagrant-docker-compose vagrant-hostsupdater)
 
     plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
     if not plugins_to_install.empty?
@@ -58,16 +58,23 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder 'admin/admin', "/var/www/tavro/admin", :nfs => true
   config.vm.synced_folder 'app', "/var/www/tavro/app", :nfs => true
 
-  # from VVV
-  config.vm.provision "fix-no-tty", type: "shell" do |s|
-      s.privileged = false
-      s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
-  end
+  compose_env = Hash.new
+    if File.file?('.env')
+        # read lines "var=value" into hash
+        compose_env = Hash[*File.read('.env').split(/[=\n]+/)]
+        # ignore keys (lines) starting with #
+        compose_env.delete_if { |key, value| key.to_s.match(/^#.*/) }
+    end
 
-  config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "provisioning/vagrant.yml"
-      ansible.skip_tags = "staging, production"
-  end
+    config.vm.provision :docker
+    config.vm.provision :docker_compose,
+      project_name: appname,
+      yml: "/vagrant/docker-compose.yml",
+      env: compose_env,
+      rebuild: true,
+      run: "always"
+
+  config.vm.provision "shell", inline: "sudo grouped docker && sudo gpasswd -a ${USER} docker && sudo service docker.io restart"
 
   config.vm.post_up_message = "aglio -i api/blueprint.apib -o api/docs/apib.html"
   config.vm.post_up_message = "Visit the official docs for setting up authentication keys: https://zoadilack.atlassian.net/wiki/pages/viewpage.action?pageId=1966120#Provisioning&DevOps-tavro-dev-env"
