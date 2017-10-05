@@ -48,10 +48,12 @@ services:
     ports:
        - '80:80'
     volumes:
-      - ./api:/var/www/tavro:Z
+      - /vagrant/api:/var/www/tavro:Z
     environment:
       VIRTUAL_HOST: ${API_HOSTNAME}
       VIRTUAL_PORT: ${API_PORT}
+      PUID: "id -u $USER"
+      PGID: "id -g $USER"
     depends_on:
       - db
     links:
