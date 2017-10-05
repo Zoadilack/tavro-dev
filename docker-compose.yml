@@ -48,7 +48,7 @@ services:
     ports:
        - '80:80'
     volumes:
-      - ./api:/var/www/tavro
+      - ./api:/var/www/tavro:Z
     environment:
       VIRTUAL_HOST: ${API_HOSTNAME}
       VIRTUAL_PORT: ${API_PORT}
@@ -60,31 +60,6 @@ services:
       tavro:
         aliases:
           - api.tavro.dev
-
-#  admin:
-#    image: "tavro/admin"
-#    container_name: "tavro_admin"
-#    restart: always
-#    ports:
-#       - '1000:80'
-#    volumes:
-#      - ./admin:/var/www/tavro
-#    depends_on:
-#     - db
-#    links:
-#     - db
-#    command: ["bash", "/var/www/tavro/init.sh", "--env", "${ADMIN_ENVIRONMENT}"]
-#
-#  app:
-#    image: "tavro/app"
-#    container_name: "tavro_app"
-#    restart: always
-#    ports:
-#       - '4000:80'
-#    volumes:
-#      - ./app:/var/www/tavro
-#    ports:
-#      - "4000:4000"
 
 networks:
   tavro:
