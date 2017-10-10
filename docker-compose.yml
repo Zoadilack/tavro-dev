@@ -1,68 +1,48 @@
-# Build a containerized application for Tavro
-
 version: '2.1'
 
 services:
 
   db:
-    image: mysql
     container_name: "tavro_db"
-    restart: always
-    ports:
-       - ${MYSQL_PORT}
-    environment:
-       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-       MYSQL_DATABASE: ${MYSQL_DATABASE}
-       MYSQL_USERNAME: ${MYSQL_USERNAME}
-       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    networks:
-      tavro:
-        aliases:
-          - db.tavro.dev
-
-  phpmyadmin:
-    image: 'phpmyadmin/phpmyadmin'
-    container_name: "phpmyadmin"
-    restart: always
-    ports:
-       - '8080:80'
-    depends_on:
-      - db
-    links:
-      - db
-    environment:
-        MYSQL_USERNAME: ${MYSQL_USERNAME}
-        MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-        PMA_HOST: db #this needs to match the container_name of the db container
-        UPLOAD_SIZE: ${UPLOAD_SIZE}
-    networks:
-      tavro:
-        aliases:
-          - phpmyadmin.tavro.dev
-
-  api:
-    image: "tavro/api"
-    container_name: "tavro_api"
-    restart: always
-    ports:
-       - '80:80'
+    image: mysql
     volumes:
-      - /vagrant/api:/var/www/tavro:Z
+      - "./.data/db:/var/lib/mysql"
     environment:
-      VIRTUAL_HOST: ${API_HOSTNAME}
-      VIRTUAL_PORT: ${API_PORT}
-      PUID: "id -u $USER"
-      PGID: "id -g $USER"
-    depends_on:
-      - db
-    links:
-      - db
-    networks:
-      tavro:
-        aliases:
-          - api.tavro.dev
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-networks:
-  tavro:
-    driver: bridge
+  php:
+    build:
+      context: ./provisioning/docker/tavro-api
+    volumes:
+      - ./api:/var/www/tavro/api
+      - ./logs/tavro:/var/www/tavro/api/app/logs
+
+  nginx:
+    container_name: "tavro_api_nginx"
+    build:
+      context: ./provisioning/docker/nginx
+    environment:
+      HOSTNAME: ${API_HOSTNAME}
+      WEBROOT: ${API_WEBROOT}
+      ENV: ${API_ENV}
+    ports:
+      - 80:80
+    volumes_from:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+
+  elk:
+    container_name: "tavro_elk"
+    image: willdurand/elk
+    ports:
+      - 81:80
+    volumes:
+      - ./provisioning/docker/elk/logstash:/etc/logstash
+      - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns
+    volumes_from:
+      - php
+      - nginx

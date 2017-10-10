@@ -6,7 +6,8 @@ db
 docs/api-blueprint.html
 .vscode
 cache/
-logs/
+./logs/
 zoadilack-scripts
 bin/*
 .env
+./logs/*
