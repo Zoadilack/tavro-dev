@@ -1,68 +1,44 @@
-version: '3'
-
+version: '2'
 services:
-
   db:
-    container_name: "tavro_db"
     image: mysql
-    volumes:
-      - "./.data/db:/var/lib/mysql"
+    container_name: "tavro_db"
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_USER: ${MYSQL_USERNAME}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    networks:
-      tavro:
-        aliases:
-          - db.tavro.dev
-
+  
   php:
-    container_name: tavro_api
-    build:
-      context: ./provisioning/docker/tavro-api
-    volumes:
-      - ./api:/var/www/tavro
-      - ./logs/tavro:/var/www/tavro/api/app/logs
-    networks:
-      tavro:
-        aliases:
-          - api.tavro.dev
-
-  nginx:
-    build:
-      context: ./provisioning/docker/nginx
-    environment:
-      HOSTNAME: ${API_HOSTNAME}
-      WEBROOT: ${API_WEBROOT}
-      ENV: ${API_ENV}
+    build: ./provisioning/docker/php-fpm
     ports:
-      - 80:80
-    depends_on:
+      - "9000:9000"
+    volumes:
+      - ./api:/var/www/tavro:cached
+      - ./logs/symfony:/var/www/tavro/api/app/logs:cached
+    links:
+      - db
+  
+  nginx:
+    build: ./provisioning/docker/nginx
+    ports:
+      - "80:80"
+    links:
+      - php
+    volumes_from:
       - php
     volumes:
-      - ./logs/nginx/:/var/log/nginx
-    networks:
-      tavro:
-        aliases:
-          - nginx.tavro.dev
-
+      - ./logs/nginx/:/var/log/nginx:cached
+  
   elk:
-    container_name: "tavro_elk"
     image: willdurand/elk
     ports:
-      - 81:80
+      - "81:80"
     volumes:
-      - ./provisioning/docker/elk/logstash:/etc/logstash
-      - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns
-    depends_on:
+      - ./provisioning/docker/elk/logstash:/etc/logstash:cached
+      - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns:cached
+    volumes_from:
       - php
       - nginx
-    networks:
-      tavro:
-        aliases:
-          - logs.tavro.dev
-
-networks:
-  tavro:
-    driver: bridge
