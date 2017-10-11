@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 services:
 
@@ -12,16 +12,24 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USERNAME: ${MYSQL_USERNAME}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      tavro:
+        aliases:
+          - db.tavro.dev
 
   php:
+    container_name: tavro_api
     build:
       context: ./provisioning/docker/tavro-api
     volumes:
-      - ./api:/var/www/tavro/api
+      - ./api:/var/www/tavro
       - ./logs/tavro:/var/www/tavro/api/app/logs
+    networks:
+      tavro:
+        aliases:
+          - api.tavro.dev
 
   nginx:
-    container_name: "tavro_api_nginx"
     build:
       context: ./provisioning/docker/nginx
     environment:
@@ -30,10 +38,14 @@ services:
       ENV: ${API_ENV}
     ports:
       - 80:80
-    volumes_from:
+    depends_on:
       - php
     volumes:
       - ./logs/nginx/:/var/log/nginx
+    networks:
+      tavro:
+        aliases:
+          - nginx.tavro.dev
 
   elk:
     container_name: "tavro_elk"
@@ -43,6 +55,14 @@ services:
     volumes:
       - ./provisioning/docker/elk/logstash:/etc/logstash
       - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns
-    volumes_from:
+    depends_on:
       - php
       - nginx
+    networks:
+      tavro:
+        aliases:
+          - logs.tavro.dev
+
+networks:
+  tavro:
+    driver: bridge
