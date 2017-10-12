@@ -2,9 +2,12 @@
 .idea
 .DS_Store
 .vagrant
+db
 docs/api-blueprint.html
 .vscode
 cache/
-logs/
 zoadilack-scripts
 bin/*
+.env
+elk
+logs

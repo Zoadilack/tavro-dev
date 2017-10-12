@@ -1,0 +1,44 @@
+version: '2'
+services:
+  db:
+    image: mysql
+    container_name: "tavro_db"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  
+  php:
+    build: ./provisioning/docker/php-fpm
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./api:/var/www/tavro:cached
+      - ./logs/symfony:/var/www/tavro/api/app/logs:cached
+    links:
+      - db
+  
+  nginx:
+    build: ./provisioning/docker/nginx
+    ports:
+      - "80:80"
+    links:
+      - php
+    volumes_from:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx:cached
+  
+  elk:
+    image: willdurand/elk
+    ports:
+      - "81:80"
+    volumes:
+      - ./provisioning/docker/elk/logstash:/etc/logstash:cached
+      - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns:cached
+    volumes_from:
+      - php
+      - nginx
