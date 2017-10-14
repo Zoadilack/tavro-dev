@@ -36,6 +36,7 @@ else
 fi
 
 echo "Installing SAMI"
+rm -rf $DIR/sami.phar
 wget http://get.sensiolabs.org/sami.phar
 mv sami.phar bin/sami
 chmod a+x bin/sami
@@ -43,12 +44,6 @@ chmod a+x bin/sami
 echo "Building API Docs"
 php bin/sami update api/docs/config.php -v
 
-# Run vagrant
-echo "Building Local virtual machine"
-vagrant box update
-if [ ! -d ".vagrant/machines/default/virtualbox/id" ]; then
-    vagrant up
-else
-    vagrant reload
-    vagrant provision
-fi
+docker-compose kill
+docker-compose up --build -d
+docker exec -it tavro_php sh /var/www/tavro/init.sh --env=dev

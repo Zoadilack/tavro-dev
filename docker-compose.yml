@@ -1,6 +1,8 @@
-version: '2'
+version: '2.1'
+
 services:
-  db:
+
+  tavro_db:
     image: mysql
     container_name: "tavro_db"
     ports:
@@ -12,6 +14,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   
   php:
+    container_name: tavro_php
     build: ./provisioning/docker/php-fpm
     ports:
       - "9000:9000"
@@ -19,9 +22,10 @@ services:
       - ./api:/var/www/tavro:cached
       - ./logs/symfony:/var/www/tavro/api/app/logs:cached
     links:
-      - db
+      - tavro_db
   
   nginx:
+    container_name: tavro_nginx
     build: ./provisioning/docker/nginx
     ports:
       - "80:80"
@@ -33,6 +37,7 @@ services:
       - ./logs/nginx/:/var/log/nginx:cached
   
   elk:
+    container_name: tavro_elk
     image: willdurand/elk
     ports:
       - "81:80"
