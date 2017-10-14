@@ -8,13 +8,12 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USERNAME}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USERNAME}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
   
   php:
-    container_name: tavro_php
     build: ./provisioning/docker/php-fpm
     ports:
       - "9000:9000"
@@ -25,8 +24,8 @@ services:
       - tavro_db
   
   nginx:
-    container_name: tavro_nginx
-    build: ./provisioning/docker/nginx
+    build: 
+      context: ./provisioning/docker/nginx
     ports:
       - "80:80"
     links:
@@ -37,7 +36,6 @@ services:
       - ./logs/nginx/:/var/log/nginx:cached
   
   elk:
-    container_name: tavro_elk
     image: willdurand/elk
     ports:
       - "81:80"

@@ -12,6 +12,8 @@ if [ ! -d "$SCRIPT_DIR" ]; then
   git clone git@github.com:zoadilack/scripts.git /usr/local/zoadilack-scripts
   # Setup your local workstation
   bash /usr/local/zoadilack-scripts/osx-dev.sh
+else
+  cd /usr/local/zoadilack-scripts && git pull && cd $DIR
 fi
 
 # Update all the latest submodules
@@ -44,6 +46,4 @@ chmod a+x bin/sami
 echo "Building API Docs"
 php bin/sami update api/docs/config.php -v
 
-docker-compose kill
-docker-compose up --build -d
-docker exec -it tavro_php sh /var/www/tavro/init.sh --environment=dev
+vagrant up
