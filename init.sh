@@ -46,4 +46,4 @@ php bin/sami update api/docs/config.php -v
 
 docker-compose kill
 docker-compose up --build -d
-docker exec -it tavro_php sh /var/www/tavro/init.sh --env=dev
+docker exec -it tavro_php sh /var/www/tavro/init.sh --environment=dev
