@@ -4,15 +4,17 @@ This aggregate repository builds a local virtual machine using Virtualbox, Vagra
 
 ## Getting Started
 
-    $ git clone --recursive git@github.com:zoadilack/tavro-dev.git && cd tavro-dev && bash init.sh
+    git clone --recursive git@github.com:zoadilack/tavro-dev.git && cd tavro-dev && bash init.sh
 
-### Networking
+## Hardcore Mode
 
-First, we need to add an entry for `/etc/hosts`
+If you prefer to avoid the hassle of a virtual machine on your workstation, you can run the application natively with Docker, locally on your workstation as an alternative.
 
-    sudo echo $(docker network inspect bridge | grep Gateway | grep -o -E '[0-9\.]+') "api.tavro.dev" >> /etc/hosts
+This however, requires that you have docker, docker-compose, and a variety of other tools at your disposal.
 
-For OS X, please take a look [here](https://docs.docker.com/docker-for-mac/networking/) and for Windows read [this](https://docs.docker.com/docker-for-windows/#/step-4-explore-the-application-and-run-examples) (4th step).
+Assuming that to be true, you can proceed at your own risk:
+
+    cd tavro-dev && bash init.sh --local-only
 
 ## Useful Tools
 
@@ -23,7 +25,7 @@ These are useful tools and utilities that may or may not be useful depending on 
 Install `docker-clean` to manage your containers during development.
 
     brew install docker-clean
-    
+
 Remove all containers and images:
 
     docker-clean -s -c -i -t
@@ -31,17 +33,7 @@ Remove all containers and images:
 Remove all networks, volumes, etc:
 
     docker-clean
-    
-## Hardcore Mode
 
-If you prefer to avoid the hassle of a virtual machine on your workstation, you can run the application natively with Docker, locally on your workstation as an alternative.
-
-This however, requires that you have docker, docker-compose, and a variety of other tools at your disposal.
-
-Assuming that to be true, you can proceed at your own risk:
-
-    cd tavro-dev && bash init.sh --local-only
-    
 ## Wiki / Docs
 
 * [API (tavro-api)](https://github.com/Zoadilack/tavro-api/wiki)
