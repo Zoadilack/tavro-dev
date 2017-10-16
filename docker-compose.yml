@@ -45,3 +45,13 @@ services:
     volumes_from:
       - php
       - nginx
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - tavro_db
+    environment:
+      PMA_HOST: tavro_db
+      PMA_PORT: 3306
+    ports:
+      - '8080:80'
