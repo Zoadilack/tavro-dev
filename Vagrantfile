@@ -72,9 +72,7 @@ Vagrant.configure(2) do |config|
 
   # NFS is waaaaay faster than the standard rsync, and this way we determine the
   # root directory structure to replicate production as well.
-  # config.vm.synced_folder 'api/api', "/var/www/tavro/api", :nfs => true
-  # config.vm.synced_folder 'admin/admin', "/var/www/tavro/admin", :nfs => true
-  # config.vm.synced_folder 'app', "/var/www/tavro/app", :nfs => true
+  config.vm.synced_folder '.', "/tavro", :nfs => true
 
   compose_env = Hash.new
     if File.file?('.env')
@@ -87,7 +85,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision :docker
     config.vm.provision :docker_compose,
       project_name: appname,
-      yml: "/vagrant/docker-compose.yml",
+      yml: "/tavro/docker-compose.yml",
       env: compose_env,
       rebuild: true,
       run: "always"
