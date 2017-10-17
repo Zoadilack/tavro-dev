@@ -3,15 +3,17 @@ version: '2.1'
 services:
 
   tavro_db:
-    image: mysql
-    container_name: "tavro_db"
+    image: mysql:5.7
+    restart: always
     ports:
-      - "3306:3306"
+      - ${MYSQL_PORT}
     environment:
-      - MYSQL_DATABASE="${MYSQL_DATABASE}"
-      - MYSQL_USER="${MYSQL_USERNAME}"
-      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
-      - MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql:/var/lib/mysql
   
   php:
     build: ./provisioning/docker/php-fpm
