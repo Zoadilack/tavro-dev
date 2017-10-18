@@ -26,12 +26,15 @@ sudo rm -rf logs/*
 echo "Remove mysql data"
 sudo rm -rf mysql/*
 echo "Cleanup hosts file"
-sed -i '' '/127.0.0.1   api.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   admin.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   app.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   docs.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   db.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   phpmyadmin.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   elk.tavro.dev/d' /etc/hosts
-sed -i '' '/127.0.0.1   www.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   api.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   admin.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   app.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   docs.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   db.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   phpmyadmin.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   elk.tavro.dev/d' /etc/hosts
+sudo sed -i '' '/127.0.0.1   www.tavro.dev/d' /etc/hosts
+echo "cleanup Docker"
+docker-clean -s -c -i -t
+docker-clean
 echo "Done!"

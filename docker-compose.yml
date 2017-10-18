@@ -13,6 +13,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       VIRTUAL_HOST: "db.tavro.dev"
+      PHP_CONTAINER: "php"
     volumes:
       - ./mysql:/var/lib/mysql
 
@@ -30,7 +31,11 @@ services:
     build:
       context: ./provisioning/docker/nginx
     environment:
-      VIRTUAL_HOST: "api.tavro.dev"
+      VIRTUAL_HOST: ${API_HOSTNAME}
+      APP_NAME: "api"
+      WEBROOT: ${API_WEBROOT}
+      APP_ENV: ${API_ENV}
+      NGINX_PORT: ${API_PORT}
     links:
       - php
     volumes_from:

@@ -76,3 +76,5 @@ sudo brew services restart dnsmasq
 docker-compose up -d --build
 
 dscacheutil -flushcache
+
+echo "\n**********\nIf you have never installed dnsmasq before, you may need to reboot your workstation.\n**********\n"
