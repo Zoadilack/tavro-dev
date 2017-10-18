@@ -20,7 +20,9 @@ sudo rm -rf api/docs/build/*
 echo "Remove app node_modules"
 sudo rm -rf app/node_modules
 echo "Remove vagrant console log"
-sudo rm -rf ubuntu-xenial-16.04-cloudimg-console.log
+sudo rm -rf *.log
 echo "Remove sync'd logs"
 sudo rm -rf logs/*
+echo "Remove mysql data"
+sudo rm -rf mysql/*
 echo "Done!"

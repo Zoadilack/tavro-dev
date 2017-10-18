@@ -46,4 +46,6 @@ chmod a+x bin/sami
 echo "Building API Docs"
 php bin/sami update api/docs/config.php -v
 
-vagrant up
+docker-machine create tavro
+docker run -d --name nginx -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
+docker-compose up -d --build
