@@ -10,3 +10,6 @@
 [submodule "app"]
 	path = app
 	url = git@github.com:zoadilack/tavro-app.git
+[submodule "www"]
+	path = www
+	url = git@github.com:zoadilack/tavro-www.git

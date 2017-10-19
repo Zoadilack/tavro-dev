@@ -27,7 +27,7 @@ services:
     links:
       - tavro_db
 
-  nginx:
+  api:
     build:
       context: ./provisioning/docker/nginx
     environment:
@@ -42,7 +42,7 @@ services:
     volumes_from:
       - php
     volumes:
-      - ./logs/nginx/:/var/log/nginx:cached
+      - ./logs/nginx/:/var/log/nginx:cached 
   
   elk:
     image: willdurand/elk
@@ -53,7 +53,7 @@ services:
       - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns:cached
     volumes_from:
       - php
-      - nginx
+      - api
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

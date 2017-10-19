@@ -12,3 +12,30 @@ bin/*
 elk
 logs
 mysql
+Would skip repository web/modules/contrib/commerce
+Would skip repository web/modules/contrib/devel
+Would skip repository web/modules/contrib/libraries
+Would skip repository web/modules/contrib/swiftmailer
+web/modules/contrib/address
+web/modules/contrib/admin_toolbar
+web/modules/contrib/adminimal_admin_toolbar
+web/modules/contrib/colorbox
+web/modules/contrib/ctools
+web/modules/contrib/easy_breadcrumb
+web/modules/contrib/entity
+web/modules/contrib/entity_reference_revisions
+web/modules/contrib/fontyourface
+web/modules/contrib/google_analytics
+web/modules/contrib/inline_entity_form
+web/modules/contrib/mailsystem
+web/modules/contrib/masonry
+web/modules/contrib/masonry_views
+web/modules/contrib/module_filter
+web/modules/contrib/pathauto
+web/modules/contrib/profile
+web/modules/contrib/search_api
+web/modules/contrib/state_machine
+web/modules/contrib/token
+web/core
+web/libraries
+web/themes
