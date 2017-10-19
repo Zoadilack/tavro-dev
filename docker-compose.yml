@@ -3,7 +3,8 @@ version: '2'
 services:
 
   tavro_db:
-    image: mysql:5.7
+    image: mysql
+    container_name: "tavro_db"
     restart: always
     ports:
       - ${MYSQL_PORT}

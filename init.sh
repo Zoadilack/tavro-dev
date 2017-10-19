@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 #
 # Setup your workstation for Tavro and provision a standalone dev environment.
 #
@@ -77,4 +78,6 @@ docker-compose up -d --build
 
 dscacheutil -flushcache
 
-echo "\n**********\nIf you have never installed dnsmasq before, you may need to reboot your workstation.\n**********\n"
+echo ""
+echo "If you have never installed dnsmasq before, you may need to reboot your workstation."
+echo ""
