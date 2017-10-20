@@ -32,6 +32,26 @@ else
   cd api/api && composer update -v --prefer-dist && cd $DIR
 fi
 
+ADMIN_VENDOR_DIR="$DIR/admin/admin/vendor"
+
+if [ ! -d "ADMIN_VENDOR_DIR" ]; then
+  echo "Installing ADMIN"
+  cd admin/admin && composer install -v --prefer-dist --no-plugins && cd $DIR
+else
+  echo "Updating ADMIN"
+  cd admin/admin && composer update -v --prefer-dist && cd $DIR
+fi
+
+WWW_VENDOR_DIR="$DIR/www/vendor"
+
+if [ ! -d "WWW_VENDOR_DIR" ]; then
+  echo "Installing WWW"
+  cd www/vendor && composer install -v --prefer-dist && cd $DIR
+else
+  echo "Updating WWW"
+  cd www/vendor && composer update -v --prefer-dist && cd $DIR
+fi
+
 echo "Installing tavro-app"
 if [ ! -d "app/node_modules" ]; then
     cd app && yarn install && cd $DIR
@@ -49,16 +69,19 @@ echo "Building API Docs"
 php -i memory_limit=-1 bin/sami update api/docs/config.php -v
 
 # Setup the local proxy stuff
-docker-machine status default 2> /dev/null || docker-machine create default
+if docker-machine status default | grep -q "Stopped" ; then
+    # Machine exists, restart it
+    docker-machine restart default
+else
+    # Machine does not exist, create it
+    docker-machine create default
+fi
 eval $(docker-machine env default)
 
 brew ls --versions dnsmasq && brew upgrade dnsmasq || brew install dnsmasq
 sudo echo "address/dev/$(docker-machine ip)" >> /usr/local/etc/dnsmasq.conf
 sudo mkdir -p /etc/resolver
 echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/dev
-
-LINE="127.0.0.1  admin.tavro.dev app.tavro.dev api.tavro.dev docs.tavro.dev > /dev/null &"
-FILE=/etc/hosts
 
 sudo grep -q "api.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   api.tavro.dev' >> /etc/hosts";
 sudo grep -q "admin.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   admin.tavro.dev' >> /etc/hosts";
@@ -67,6 +90,7 @@ sudo grep -q "docs.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   
 sudo grep -q "db.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   db.tavro.dev' >> /etc/hosts";
 sudo grep -q "phpmyadmin.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   phpmyadmin.tavro.dev' >> /etc/hosts";
 sudo grep -q "elk.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   elk.tavro.dev' >> /etc/hosts";
+sudo grep -q "www.tavro.dev" /etc/hosts || sudo -- sh -c -e "echo '127.0.0.1   www.tavro.dev' >> /etc/hosts";
 
 sudo brew services restart dnsmasq
 

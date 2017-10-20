@@ -5,10 +5,6 @@
 #  sudo bash destroy.sh
 #
 
-echo "Destroy Vagrant machine"
-vagrant destroy
-echo "Remove vagrant remnants"
-sudo rm -rf .vagrant
 echo "Remove api vendor libs"
 sudo rm -rf api/api/vendor
 echo "Remove admin vendor libs"
