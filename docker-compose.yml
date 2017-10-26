@@ -21,8 +21,10 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - ./api:/var/www/tavro:cached
-      - ./admin:/var/www/tavro:cached
+      - ./api/api:/var/www/api
+      - ./admin/admin:/var/www/admin
+      - ./api/init.sh:/var/www/tavro/api/init.sh
+      #- ./admin/init.sh:/var/www/tavro/admin/init.sh
       - ./logs/api:/var/www/tavro/api/app/logs:cached
       - ./logs/admin:/var/www/tavro/admin/app/logs:cached
     links:
@@ -30,30 +32,26 @@ services:
 
   api:
     build:
-      context: ./provisioning/docker/nginx
+      context: ./provisioning/docker/api
     links:
       - php
+    ports:
+      - "8000:80"
     volumes_from:
       - php
     volumes:
       - ./logs/nginx/:/var/log/nginx:cached
-
-#  admin:
-#    build:
-#      context: ./provisioning/docker/nginx
-#    environment:
-#      VIRTUAL_HOST: ${ADMIN_HOSTNAME}
-#      APP_NAME: "admin"
-#      WEBROOT: ${ADMIN_WEBROOT}
-#      APP_ENV: ${ADMIN_ENV}
-#      NGINX_PORT: ${ADMIN_PORT}
-#      PHP_CONTAINER: "php"
-#    links:
-#      - php
-#    volumes_from:
-#      - php
-#    volumes:
-#      - ./logs/nginx/:/var/log/nginx:cached
+  admin:
+    build:
+      context: ./provisioning/docker/admin
+    links:
+      - php
+    ports:
+      - "8001:80"
+    volumes_from:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx:cached
 
   www:
     build:
