@@ -13,7 +13,6 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      VIRTUAL_HOST: "db.tavro.dev"
     volumes:
       - ./mysql:/var/lib/mysql
 
@@ -24,20 +23,14 @@ services:
     volumes:
       - ./api:/var/www/tavro:cached
       - ./admin:/var/www/tavro:cached
-      - ./logs/symfony:/var/www/tavro/api/app/logs:cached
+      - ./logs/api:/var/www/tavro/api/app/logs:cached
+      - ./logs/admin:/var/www/tavro/admin/app/logs:cached
     links:
       - tavro_db
 
   api:
     build:
       context: ./provisioning/docker/nginx
-    environment:
-      VIRTUAL_HOST: ${API_HOSTNAME}
-      APP_NAME: "api"
-      WEBROOT: ${API_WEBROOT}
-      APP_ENV: ${API_ENV}
-      NGINX_PORT: ${API_PORT}
-      PHP_CONTAINER: "php"
     links:
       - php
     volumes_from:
@@ -45,28 +38,27 @@ services:
     volumes:
       - ./logs/nginx/:/var/log/nginx:cached
 
-  admin:
-    build:
-      context: ./provisioning/docker/nginx
-    environment:
-      VIRTUAL_HOST: ${ADMIN_HOSTNAME}
-      APP_NAME: "admin"
-      WEBROOT: ${ADMIN_WEBROOT}
-      APP_ENV: ${ADMIN_ENV}
-      NGINX_PORT: ${ADMIN_PORT}
-      PHP_CONTAINER: "php"
-    links:
-      - php
-    volumes_from:
-      - php
-    volumes:
-      - ./logs/nginx/:/var/log/nginx:cached
+#  admin:
+#    build:
+#      context: ./provisioning/docker/nginx
+#    environment:
+#      VIRTUAL_HOST: ${ADMIN_HOSTNAME}
+#      APP_NAME: "admin"
+#      WEBROOT: ${ADMIN_WEBROOT}
+#      APP_ENV: ${ADMIN_ENV}
+#      NGINX_PORT: ${ADMIN_PORT}
+#      PHP_CONTAINER: "php"
+#    links:
+#      - php
+#    volumes_from:
+#      - php
+#    volumes:
+#      - ./logs/nginx/:/var/log/nginx:cached
 
   www:
     build:
       context: ./provisioning/docker/drupal
     environment:
-      VIRTUAL_HOST: ${WWW_HOSTNAME}
       WEBROOT: ${WWW_WEBROOT}
     expose:
       - 80
@@ -92,17 +84,3 @@ services:
     environment:
       PMA_HOST: tavro_db
       PMA_PORT: 3306
-      VIRTUAL_HOST: "phpmyadmin.tavro.dev"
-
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
