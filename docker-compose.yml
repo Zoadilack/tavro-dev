@@ -20,11 +20,11 @@ services:
       - "9000:9000"
     volumes:
       - ./api/api:/var/www/api
+      - ./api/init.sh:/var/www/tavro/api.sh
       - ./admin/admin:/var/www/admin
-      - ./api/init.sh:/var/www/tavro/api/init.sh
-      #- ./admin/init.sh:/var/www/tavro/admin/init.sh
-      - ./logs/api:/var/www/tavro/api/app/logs:cached
-      - ./logs/admin:/var/www/tavro/admin/app/logs:cached
+      - ./admin/init.sh:/var/www/tavro/admin.sh
+      - ./logs/api:/var/www/api/app/logs:cached
+      - ./logs/admin:/var/www/admin/app/logs:cached
     links:
       - tavro_db
 
@@ -34,38 +34,39 @@ services:
     links:
       - php
     ports:
-      - "8000:80"
+      - "80:80"
     volumes_from:
       - php
     volumes:
       - ./logs/nginx/:/var/log/nginx:cached
+
   admin:
     build:
       context: ./provisioning/docker/admin
     links:
       - php
     ports:
-      - "8001:80"
+      - "81:80"
     volumes_from:
       - php
     volumes:
       - ./logs/nginx/:/var/log/nginx:cached
 
-  www:
-    build:
-      context: ./provisioning/docker/drupal
-    environment:
-      WEBROOT: ${WWW_WEBROOT}
-    ports:
-      - "80:80"
-    volumes:
-      - ./www:/var/www/drupal
-    restart: always
+#  www:
+#    build:
+#      context: ./provisioning/docker/drupal
+#    environment:
+#      WEBROOT: ${WWW_WEBROOT}
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - ./www:/var/www/html
+#    restart: always
 
   elk:
     image: willdurand/elk
     ports:
-      - "81:80"
+      - "8081:80"
     volumes:
       - ./provisioning/docker/elk/logstash:/etc/logstash:cached
       - ./provisioning/docker/elk/logstash/patterns:/opt/logstash/patterns:cached
