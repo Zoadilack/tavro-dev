@@ -40,15 +40,6 @@ services:
     volumes:
       - ./logs/nginx/:/var/log/nginx:cached
 
-  app:
-    image: nodejs
-    ports:
-      - "3000:3000"
-    volumes_from:
-      - php
-    volumes:
-      - ./logs/nginx/:/var/log/nginx:cached
-
   admin:
     build:
       context: ./provisioning/docker/admin
