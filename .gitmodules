@@ -13,3 +13,6 @@
 [submodule "www"]
 	path = www
 	url = git@github.com:zoadilack/tavro-www.git
+[submodule "tavro-core"]
+	path = tavro-core
+	url = git@github.com:zoadilack/tavro-core.git
