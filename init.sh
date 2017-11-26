@@ -18,7 +18,7 @@ else
 fi
 
 # Update all the latest submodules
-git pull && git pull --recurse-submodules
+git pull && git submodule update --init --recursive
 git submodule foreach git pull origin master
 git submodule foreach git checkout master
 
