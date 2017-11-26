@@ -10,6 +10,7 @@ zoadilack-scripts
 bin/*
 .env
 elk
+*.phar
 logs/*
 mysql/*
 Would skip repository web/modules/contrib/commerce

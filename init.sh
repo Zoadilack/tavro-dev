@@ -78,6 +78,9 @@ else
 fi
 eval $(docker-machine env default)
 
+# Setup baseline env
+cp .env.dist .env
+
 # Load up all the containers
 docker-compose up -d --build
 
