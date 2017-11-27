@@ -3,7 +3,7 @@
 #
 # Setup your workstation for Tavro and provision a standalone dev environment.
 #
-#  git clone git@github.com:zoadilack/tavro-dev.git && cd tavro-dev && bash setup.sh
+#  git clone git@github.com:zoadilack/tavro-dev.git && cd tavro-dev && bash init.sh
 #
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -20,7 +20,7 @@ fi
 # Update all the latest submodules
 git pull && git submodule update --init --recursive
 git submodule foreach git pull origin master
-git submodule foreach git checkout master
+
 
 API_VENDOR_DIR="$DIR/api/api/vendor"
 
