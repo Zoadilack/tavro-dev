@@ -21,7 +21,7 @@ services:
     volumes:
       - ./api/api:/var/www/api
       - ./api/init.sh:/var/www/tavro/api.sh
-      - ./admin/admin:/var/www/admin
+      - ./admin:/var/www/admin
       - ./admin/init.sh:/var/www/tavro/admin.sh
       - ./logs/api:/var/www/api/app/logs:cached
       - ./logs/admin:/var/www/admin/app/logs:cached

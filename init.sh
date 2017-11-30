@@ -26,6 +26,7 @@ API_VENDOR_DIR="$DIR/api/api/vendor"
 
 if [ ! -d "$API_VENDOR_DIR" ]; then
   echo "Installing API"
+  cp api/api/app/config/parameters.yml.dist api/api/app/config/parameters.yml
   cd api/api && composer install -v --prefer-dist --no-plugins && cd $DIR
 else
   echo "Updating API"
