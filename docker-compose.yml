@@ -52,17 +52,6 @@ services:
     volumes:
       - ./logs/nginx/:/var/log/nginx:cached
 
-#  www:
-#    build:
-#      context: ./provisioning/docker/drupal
-#    environment:
-#      WEBROOT: ${WWW_WEBROOT}
-#    ports:
-#      - "80:80"
-#    volumes:
-#      - ./www:/var/www/html
-#    restart: always
-
   elk:
     image: willdurand/elk
     ports:

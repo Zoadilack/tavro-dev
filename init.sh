@@ -37,20 +37,20 @@ ADMIN_VENDOR_DIR="$DIR/admin/admin/vendor"
 
 if [ ! -d "ADMIN_VENDOR_DIR" ]; then
   echo "Installing ADMIN"
-  cd admin/admin && composer install -v --prefer-dist --no-plugins && cd $DIR
+  cd admin && composer install -v --prefer-dist --no-plugins && cd $DIR
 else
   echo "Updating ADMIN"
-  cd admin/admin && composer update -v --prefer-dist && cd $DIR
+  cd admin && composer update -v --prefer-dist && cd $DIR
 fi
 
 WWW_VENDOR_DIR="$DIR/www/vendor"
 
 if [ ! -d "WWW_VENDOR_DIR" ]; then
   echo "Installing WWW"
-  cd www/vendor && composer install -v --prefer-dist && cd $DIR
+  cd www && composer install -v --prefer-dist && cd $DIR
 else
   echo "Updating WWW"
-  cd www/vendor && composer update -v --prefer-dist && cd $DIR
+  cd www && composer update -v --prefer-dist && cd $DIR
 fi
 
 echo "Installing tavro-app"
@@ -63,8 +63,8 @@ fi
 echo "Installing SAMI"
 rm -rf $DIR/sami.phar
 wget http://get.sensiolabs.org/sami.phar
-mv sami.phar bin/sami
-chmod a+x bin/sami
+sudo mv sami.phar /usr/local/bin/sami
+sudo chmod a+x /usr/local/bin/sami
 
 echo "Building API Docs"
 php -i memory_limit=-1 bin/sami update api/docs/config.php -v
