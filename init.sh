@@ -21,6 +21,8 @@ fi
 git pull && git submodule update --init --recursive
 git submodule foreach git pull origin master
 
+# Copy the .env file for a local env
+cp .env.dist .env
 
 API_VENDOR_DIR="$DIR/api/api/vendor"
 
