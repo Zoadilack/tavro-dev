@@ -14,23 +14,8 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-  php:
-    build: ./provisioning/docker/php-fpm
-    ports:
-      - "9000:9000"
-    volumes:
-      - ./api/api:/var/www/api
-      - ./api/init.sh:/var/www/tavro/api.sh
-      - ./admin:/var/www/admin
-      - ./admin/init.sh:/var/www/tavro/admin.sh
-      - ./logs/api:/var/www/api/app/logs:cached
-      - ./logs/admin:/var/www/admin/app/logs:cached
-    links:
-      - tavro_db
-
   api:
-    build:
-      context: ./provisioning/docker/api
+    build: api/Dockerfile
     links:
       - php
     ports:
@@ -41,8 +26,7 @@ services:
       - ./logs/nginx/:/var/log/nginx:cached
 
   admin:
-    build:
-      context: ./provisioning/docker/admin
+    build: admin/Dockerfile
     links:
       - php
     ports:
